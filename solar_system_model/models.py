@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Object:
+class SpaceObject:
     """
     A class used to represent an solar system object
 

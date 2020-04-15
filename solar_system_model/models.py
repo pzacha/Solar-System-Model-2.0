@@ -21,7 +21,7 @@ class SpaceObject:
         Gets x and y components of velocity
     """
 
-    def __init__(self, name, position, velocity):
+    def __init__(self, name: str, position: tuple, velocity: tuple):
         self.name = name
         self.position = position
         self.velocity = velocity
@@ -32,3 +32,18 @@ class SpaceObject:
     def get_velocity(self):
         v_x, v_y = self.velocity
         return np.sqrt(v_x ** 2 + v_y ** 2)
+
+
+class Planet(SpaceObject):
+    """
+    A class used to represent an solar system planet. It inherits the functionality from SpaceObject class
+
+    Attributes:
+    ----------
+    mass : str
+        the name of an object
+    """
+
+    def __init__(self, name: str, position: tuple, velocity: tuple, mass: int):
+        super().__init__(name, position, velocity)
+        self.mass = mass

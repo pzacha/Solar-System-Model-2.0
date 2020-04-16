@@ -3,34 +3,113 @@ import numpy as np
 
 class SpaceObject:
     """
-    A class used to represent an solar system object
+    A class used to represent an solar system object.
 
     Attributes:
     ----------
-    position : tuple
-        tuple that stores objects x and y coordinates
-    velocity : tuple
-        tuple that stores objects x and y components of velocity
-    name : str
-        the name of an object
-    Methods
-    -------
-    get_coordinates
-        Gets x and y coordinates of an object
-    get_velocity
-        Gets x and y components of velocity
+    position : List[int]
+        List that stores objects x and y coordinates in m.
+    velocity : List[int]
+        List that stores objects x and y components of velocity in m/s.
     """
 
-    def __init__(self, position: tuple, velocity: tuple):
+    def __init__(self, position: List[int], velocity: List[int]):
         self.position = position
         self.velocity = velocity
 
     def get_coordinates(self):
+        """Returns x and y coordinates of an object.
+
+        Returns
+        -------
+            Position: List[int]
+        """
+
         return self.position
 
     def get_velocity(self):
+        """Returns x and y components of velocity.
+
+        Returns
+        -------
+            Velocity: List[int]
+        """
+
         v_x, v_y = self.velocity
         return np.sqrt(v_x ** 2 + v_y ** 2)
+
+    def calc_distance(self, position):
+        """Calculates the distance between self and position.
+
+        Parameters
+        ----------
+        position : List[int]
+            List that stores objects x and y coordinates in m.
+
+        Returns
+        -------
+            
+        """
+
+        pass
+
+    def calc_force(self, celestial):
+        """Calculates the gravitational force between self and celestial.
+
+        Parameters
+        ----------
+        celestial : CelestialObject
+
+        Returns
+        -------
+            
+        """
+
+        pass
+
+    def calc_acceleration(self, celestials):
+        """Calculates acceleration by summing gravitational force from all celestials on self.
+
+        Parameters
+        ----------
+        celestials : Dict
+            Dict that stores all celestial objects.
+
+        Returns
+        -------
+            
+        """
+
+        sum_force = [0, 0]
+        for celestial in celestials:
+            if self is not celestial:
+                force = self.calc_force(celestial)
+                sum_force[0] += force[0]
+                sum_force[1] += force[1]
+        return [sum_force[0] / self.mass, sum_force[1] / self.mass]
+
+    def update_position(self):
+        """Updates position attribute.
+        """
+
+        pass
+
+    def update_velocity(self):
+        """Updates velocity attribute.            
+        """
+
+        pass
+
+    def update_attributes(self, celestials):
+        """Updates self attributes.
+
+        Parameters
+        ----------
+        celestials : Dict
+            Dict that stores all celestial objects.            
+        """
+
+        pass
 
 
 class CelestialObject(SpaceObject):
@@ -39,11 +118,11 @@ class CelestialObject(SpaceObject):
 
     Attributes:
     ----------
-    mass : str
-        the name of an object
+    mass : int
+        Mass of an object in kg.
     """
 
-    def __init__(self, mass: int, position: tuple, velocity: tuple):
+    def __init__(self, mass: int, position: List[int], velocity: List[int]):
         super().__init__(position, velocity)
         self.mass = mass
 
@@ -55,7 +134,7 @@ class SolarSystemSimulation:
     Attributes:
     ----------
     celestials : dict
-        class attribute. Dictionary containg celestial objects
+        Class attribute. Dictionary containing celestial objects.
     """
 
     celestials = {}

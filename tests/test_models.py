@@ -5,10 +5,10 @@ from solar_system_model.models import SpaceObject, CelestialObject, SolarSystemS
 
 class TestSpaceObject(unittest.TestCase):
     def setUp(self):
-        self.test_object = SpaceObject((50, 120), (3, 4))
+        self.test_object = SpaceObject([50, 120], [3, 4])
 
     def test_get_coordinates(self):
-        self.assertEqual((50, 120), self.test_object.get_coordinates())
+        self.assertEqual([50, 120], self.test_object.get_coordinates())
 
     def test_get_velocity(self):
         self.assertEqual(5, self.test_object.get_velocity())
@@ -16,10 +16,10 @@ class TestSpaceObject(unittest.TestCase):
 
 class TestCelestialObject(unittest.TestCase):
     def setUp(self):
-        self.test_planet = CelestialObject(1000, (50, 120), (3, 4))
+        self.test_planet = CelestialObject(1000, [50, 120], [3, 4])
 
     def test_get_coordinates(self):
-        self.assertEqual((50, 120), self.test_planet.get_coordinates())
+        self.assertEqual([50, 120], self.test_planet.get_coordinates())
 
     def test_get_velocity(self):
         self.assertEqual(5, self.test_planet.get_velocity())

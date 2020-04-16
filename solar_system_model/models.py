@@ -7,13 +7,20 @@ class SpaceObject:
 
     Attributes:
     ----------
+    GRAV_CONST : int
+        Class attribute. Gravitational constant.
     position : list[int]
-        list that stores objects x and y coordinates in m.
+        List that stores objects x and y coordinates in m.
     velocity : list[int]
-        list that stores objects x and y components of velocity in m/s.
+        List that stores objects x and y components of velocity in m/s.
+    mass : int
+        Mass of an object in kg.
     """
 
-    def __init__(self, position: list, velocity: list):
+    GRAV_CONST = 6.674 * 10 ** (-11)
+
+    def __init__(self, mass: int, position: list, velocity: list):
+        self.mass = mass
         self.position = position
         self.velocity = velocity
 
@@ -49,9 +56,10 @@ class SpaceObject:
         Returns
         -------
         distance : list[int]
-            Distance from self to position in x and y axis.
+            Distance from self to position. Contains x and y components and real value in that order.
         """
         distance = [position[0] - self.position[0], position[1] - self.position[1]]
+        distance.append(np.sqrt(distance[0] ** 2 + distance[1] ** 2))
         return distance
 
     def calc_force(self, celestial):
@@ -63,10 +71,15 @@ class SpaceObject:
 
         Returns
         -------
-            
+        force : list[int]
+            Gravitational force exerted by celestial. Contains x and y components and real value in that order.    
         """
-
-        pass
+        # Distance = [distance_x, distance_y, distance]
+        distance = self.calc_distance(celestial.position)
+        force = [SpaceObject.GRAV_CONST * self.mass * celestial.mass / (distance[2] ** 2)]
+        force.insert(0, force[-1] * distance[1] / distance[2])
+        force.insert(0, force[-1] * distance[0] / distance[2])
+        return force
 
     def calc_acceleration(self, celestials):
         """Calculates acceleration by summing gravitational force from all celestials on self.
@@ -113,19 +126,19 @@ class SpaceObject:
         pass
 
 
-class CelestialObject(SpaceObject):
+class Spacecraft(SpaceObject):
     """
-    A class used to represent an solar system planet. It inherits the functionality from SpaceObject class.
+    A class used to represent a spacecraft. It inherits the functionality from SpaceObject class. 
 
     Attributes:
     ----------
-    mass : int
-        Mass of an object in kg.
+    fuel : int
+        Amount of fuel.
     """
 
-    def __init__(self, mass: int, position: list, velocity: list):
-        super().__init__(position, velocity)
-        self.mass = mass
+    def __init__(self, mass: int, position: list, velocity: list, fuel: int):
+        super().__init__(mass, position, velocity)
+        self.fuel = fuel
 
 
 class SolarSystemSimulation:
@@ -143,11 +156,11 @@ class SolarSystemSimulation:
     def __init__(self):
 
         # Initialize celestial objects
-        sun = CelestialObject(mass=1.989 * (10 ** 30), position=(0, 0), velocity=(0, 0))
-        mercury = CelestialObject(mass=0.33 * (10 ** 24), position=(57.9 * (10 ** 9), 0), velocity=(47400, 0))
-        venus = CelestialObject(mass=4.87 * (10 ** 24), position=(108.2 * (10 ** 9), 0), velocity=(35000, 0))
-        earth = CelestialObject(mass=5.972 * (10 ** 24), position=(149.6 * (10 ** 9), 0), velocity=(29800, 0))
-        mars = CelestialObject(mass=0.642 * (10 ** 24), position=(227.9 * (10 ** 9), 0), velocity=(24100, 0))
+        sun = SpaceObject(mass=1.989 * (10 ** 30), position=(0, 0), velocity=(0, 0))
+        mercury = SpaceObject(mass=0.33 * (10 ** 24), position=(57.9 * (10 ** 9), 0), velocity=(47400, 0))
+        venus = SpaceObject(mass=4.87 * (10 ** 24), position=(108.2 * (10 ** 9), 0), velocity=(35000, 0))
+        earth = SpaceObject(mass=5.972 * (10 ** 24), position=(149.6 * (10 ** 9), 0), velocity=(29800, 0))
+        mars = SpaceObject(mass=0.642 * (10 ** 24), position=(227.9 * (10 ** 9), 0), velocity=(24100, 0))
 
         # Insert celestial objects into dictionary
         SolarSystemSimulation.celestials = {

@@ -21,8 +21,7 @@ class SpaceObject:
         Gets x and y components of velocity
     """
 
-    def __init__(self, name: str, position: tuple, velocity: tuple):
-        self.name = name
+    def __init__(self, position: tuple, velocity: tuple):
         self.position = position
         self.velocity = velocity
 
@@ -34,9 +33,9 @@ class SpaceObject:
         return np.sqrt(v_x ** 2 + v_y ** 2)
 
 
-class Planet(SpaceObject):
+class CelestialObject(SpaceObject):
     """
-    A class used to represent an solar system planet. It inherits the functionality from SpaceObject class
+    A class used to represent an solar system planet. It inherits the functionality from SpaceObject class.
 
     Attributes:
     ----------
@@ -44,6 +43,37 @@ class Planet(SpaceObject):
         the name of an object
     """
 
-    def __init__(self, name: str, position: tuple, velocity: tuple, mass: int):
-        super().__init__(name, position, velocity)
+    def __init__(self, mass: int, position: tuple, velocity: tuple):
+        super().__init__(position, velocity)
         self.mass = mass
+
+
+class SolarSystemSimulation:
+    """
+    A class to handle simulation.
+
+    Attributes:
+    ----------
+    celestials : dict
+        class attribute. Dictionary containg celestial objects
+    """
+
+    celestials = {}
+
+    def __init__(self):
+
+        # Initialize celestial objects
+        sun = CelestialObject(mass=1.989 * (10 ** 30), position=(0, 0), velocity=(0, 0))
+        mercury = CelestialObject(mass=0.33 * (10 ** 24), position=(57.9 * (10 ** 9), 0), velocity=(47400, 0))
+        venus = CelestialObject(mass=4.87 * (10 ** 24), position=(108.2 * (10 ** 9), 0), velocity=(35000, 0))
+        earth = CelestialObject(mass=5.972 * (10 ** 24), position=(149.6 * (10 ** 9), 0), velocity=(29800, 0))
+        mars = CelestialObject(mass=0.642 * (10 ** 24), position=(227.9 * (10 ** 9), 0), velocity=(24100, 0))
+
+        # Insert celestial objects into dictionary
+        SolarSystemSimulation.celestials = {
+            "Sun": sun,
+            "Mercury": mercury,
+            "Venus": venus,
+            "Earth": earth,
+            "Mars": mars,
+        }

@@ -13,6 +13,9 @@ class TestSpaceObject(unittest.TestCase):
     def test_get_velocity(self):
         self.assertEqual(5, self.test_object.get_velocity())
 
+    def test_calc_distance(self):
+        self.assertEqual([-60, -100], self.test_object.calc_distance([-10, 20]))
+
 
 class TestCelestialObject(unittest.TestCase):
     def setUp(self):

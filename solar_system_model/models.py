@@ -7,13 +7,13 @@ class SpaceObject:
 
     Attributes:
     ----------
-    position : List[int]
-        List that stores objects x and y coordinates in m.
-    velocity : List[int]
-        List that stores objects x and y components of velocity in m/s.
+    position : list[int]
+        list that stores objects x and y coordinates in m.
+    velocity : list[int]
+        list that stores objects x and y components of velocity in m/s.
     """
 
-    def __init__(self, position: List[int], velocity: List[int]):
+    def __init__(self, position: list, velocity: list):
         self.position = position
         self.velocity = velocity
 
@@ -22,7 +22,7 @@ class SpaceObject:
 
         Returns
         -------
-            Position: List[int]
+            Position: list[int]
         """
 
         return self.position
@@ -32,7 +32,7 @@ class SpaceObject:
 
         Returns
         -------
-            Velocity: List[int]
+            Velocity: list[int]
         """
 
         v_x, v_y = self.velocity
@@ -43,15 +43,16 @@ class SpaceObject:
 
         Parameters
         ----------
-        position : List[int]
-            List that stores objects x and y coordinates in m.
+        position : list[int]
+            list that stores objects x and y coordinates in m.
 
         Returns
         -------
-            
+        distance : list[int]
+            Distance from self to position in x and y axis.
         """
-
-        pass
+        distance = [position[0] - self.position[0], position[1] - self.position[1]]
+        return distance
 
     def calc_force(self, celestial):
         """Calculates the gravitational force between self and celestial.
@@ -122,7 +123,7 @@ class CelestialObject(SpaceObject):
         Mass of an object in kg.
     """
 
-    def __init__(self, mass: int, position: List[int], velocity: List[int]):
+    def __init__(self, mass: int, position: list, velocity: list):
         super().__init__(position, velocity)
         self.mass = mass
 

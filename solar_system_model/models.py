@@ -105,28 +105,26 @@ class SpaceObject:
         acceleration = [sum_force[0] / self.mass, sum_force[1] / self.mass]
         return acceleration
 
-    def update_position(self):
-        """Updates position attribute.
-        """
-
-        pass
-
-    def update_velocity(self):
-        """Updates velocity attribute.            
-        """
-
-        pass
-
-    def update_attributes(self, celestials):
-        """Updates self attributes.
+    def update_attributes(self, celestials, timestamp):
+        """Calculates acceleration and updates attributes.
 
         Parameters
         ----------
         celestials : Dict
-            Dict that stores all celestial objects.            
+            Dict that stores all celestial objects.
+        timpestamp : int
+            Simulation timestamp value.            
         """
 
-        pass
+        acceleration = self.calc_acceleration(celestials)
+
+        # Calculating x and y components of velocity
+        self.velocity[0] = self.velocity[0] + acceleration[0] * timestamp
+        self.velocity[1] = self.velocity[1] + acceleration[1] * timestamp
+
+        # Calculating new x and y coordinates
+        self.position[0] = self.position[0] + self.velocity[0] * timestamp
+        self.position[1] = self.position[1] + self.velocity[1] * timestamp
 
 
 class Spacecraft(SpaceObject):
@@ -159,11 +157,11 @@ class SolarSystemSimulation:
     def __init__(self):
 
         # Initialize celestial objects
-        sun = SpaceObject(mass=1.989 * (10 ** 30), position=(0, 0), velocity=(0, 0))
-        mercury = SpaceObject(mass=0.33 * (10 ** 24), position=(57.9 * (10 ** 9), 0), velocity=(47400, 0))
-        venus = SpaceObject(mass=4.87 * (10 ** 24), position=(108.2 * (10 ** 9), 0), velocity=(35000, 0))
-        earth = SpaceObject(mass=5.972 * (10 ** 24), position=(149.6 * (10 ** 9), 0), velocity=(29800, 0))
-        mars = SpaceObject(mass=0.642 * (10 ** 24), position=(227.9 * (10 ** 9), 0), velocity=(24100, 0))
+        sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
+        mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[57.9 * (10 ** 9), 0], velocity=[47400, 0])
+        venus = SpaceObject(mass=4.87 * (10 ** 24), position=[108.2 * (10 ** 9), 0], velocity=[35000, 0])
+        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[149.6 * (10 ** 9), 0], velocity=[29800, 0])
+        mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[24100, 0])
 
         # Insert celestial objects into dictionary
         SolarSystemSimulation.celestials = {

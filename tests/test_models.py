@@ -7,6 +7,7 @@ class TestSpaceObject(unittest.TestCase):
     def setUp(self):
         self.test_object = SpaceObject(1000, [2, 60], [3, 4])
         self.test_simulation = SolarSystemSimulation()
+        self.celestials = {"obj": SpaceObject(10 ** 10, [-2, 63], [0, 0])}
 
     def test_get_coordinates(self):
         self.assertEqual([2, 60], self.test_object.get_coordinates())
@@ -18,15 +19,20 @@ class TestSpaceObject(unittest.TestCase):
         self.assertEqual([-4, 3, 5], self.test_object.calc_distance([-2, 63]))
 
     def test_calc_force(self):
-        test_object2 = SpaceObject(1000, [-2, 63], [0, 0])
-        force = [round(num, 8) for num in [-4 / 5 * 2.67e-06, 3 / 5 * 2.67e-06, 2.67e-06]]
-        self.assertEqual(force, [round(num, 8) for num in self.test_object.calc_force(test_object2)])
+        force = [round(num, 1) for num in [-4 / 5 * 26.7, 3 / 5 * 26.7, 26.7]]
+        self.assertEqual(force, [round(num, 1) for num in self.test_object.calc_force(self.celestials["obj"])])
 
     def test_calc_acceleration(self):
         self.assertEqual(
-            [-1227082627631963.0, -3.681247882895889e16],
-            self.test_object.calc_acceleration(SolarSystemSimulation.celestials),
+            [-0.021, 0.016], [round(num, 3) for num in self.test_object.calc_acceleration(self.celestials)],
         )
+
+    def test_update_attributes(self):
+        velocity = [self.test_object.velocity[0] - 0.021, self.test_object.velocity[1] + 0.016]
+        position = [self.test_object.position[0] + 2.979, self.test_object.position[1] + 4.016]
+        self.test_object.update_attributes(self.celestials, 1)
+        self.assertEqual(velocity, [round(num, 3) for num in self.test_object.velocity])
+        self.assertEqual(position, [round(num, 3) for num in self.test_object.position])
 
 
 class TestSpacecraft(unittest.TestCase):

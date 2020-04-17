@@ -91,16 +91,19 @@ class SpaceObject:
 
         Returns
         -------
-            
+        acceleration : list[int]
+            Acceleration calculated with resultant of gravitational forces from all celestials.
+            Contains x and y components.
         """
 
         sum_force = [0, 0]
-        for celestial in celestials:
-            if self is not celestial:
-                force = self.calc_force(celestial)
+        for celestial in celestials.items():
+            if self is not celestial[1]:
+                force = self.calc_force(celestial[1])
                 sum_force[0] += force[0]
                 sum_force[1] += force[1]
-        return [sum_force[0] / self.mass, sum_force[1] / self.mass]
+        acceleration = [sum_force[0] / self.mass, sum_force[1] / self.mass]
+        return acceleration
 
     def update_position(self):
         """Updates position attribute.

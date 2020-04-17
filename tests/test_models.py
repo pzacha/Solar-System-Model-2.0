@@ -22,6 +22,12 @@ class TestSpaceObject(unittest.TestCase):
         force = [round(num, 8) for num in [-4 / 5 * 2.67e-06, 3 / 5 * 2.67e-06, 2.67e-06]]
         self.assertEqual(force, [round(num, 8) for num in self.test_object.calc_force(test_object2)])
 
+    def test_calc_acceleration(self):
+        self.assertEqual(
+            [-1227082627631963.0, -3.681247882895889e16],
+            self.test_object.calc_acceleration(SolarSystemSimulation.celestials),
+        )
+
 
 class TestSpacecraft(unittest.TestCase):
     def setUp(self):

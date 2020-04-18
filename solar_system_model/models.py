@@ -1,6 +1,4 @@
 import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.animation import FuncAnimation
 
 
 class SpaceObject:
@@ -142,62 +140,3 @@ class Spacecraft(SpaceObject):
     def __init__(self, mass: int, position: list, velocity: list, fuel: int):
         super().__init__(mass, position, velocity)
         self.fuel = fuel
-
-
-class SolarSystemSimulation:
-    """
-    A class to handle simulation.
-
-    Attributes:
-    ----------
-    celestials : dict
-        Class attribute. Dictionary containing celestial objects.
-    """
-
-    celestials = {}
-
-    def __init__(self):
-
-        # Initialize celestial objects
-        sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
-        # mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[57.9 * (10 ** 9), 0], velocity=[47400, 0])
-        # venus = SpaceObject(mass=4.87 * (10 ** 24), position=[108.2 * (10 ** 9), 0], velocity=[35000, 0])
-        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[149.6 * (10 ** 9), 0], velocity=[29800, 0])
-        # mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[24100, 0])
-
-        # Insert celestial objects into dictionary
-        SolarSystemSimulation.celestials = {
-            "Sun": sun,
-            # "Mercury": mercury,
-            # "Venus": venus,
-            "Earth": earth,
-            # "Mars": mars,
-        }
-
-    # def simulate(self):
-
-    #     for celestial in celestials.items():
-    #         celestial[1].update_attributes(celestials, 100)
-
-    def animation(self):
-        x_cor = [0]
-        y_cor = [0]
-
-        fig = plt.figure()
-        ax = plt.axes(xlim=(0, 1000), ylim=(0, 100))
-        line = None
-        (line,) = ax.plot([0], [0], "go")
-
-        def animate(i):
-            x_cor[0] = 2 * i
-            y_cor[0] = i
-            line.set_data(x_cor, y_cor)
-            return (line,)
-
-        anim = FuncAnimation(fig, animate, frames=100, interval=50, blit=True)
-        plt.show()
-
-
-sim = SolarSystemSimulation()
-
-sim.animation()

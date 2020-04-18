@@ -1,6 +1,7 @@
 import unittest
 
-from solar_system_model.models import SpaceObject, Spacecraft, SolarSystemSimulation
+from solar_system_model.models import SpaceObject, Spacecraft
+from solar_system_model.simulation import SolarSystemSimulation
 
 
 class TestSpaceObject(unittest.TestCase):
@@ -53,6 +54,9 @@ class TestSolarSystemSimulation(unittest.TestCase):
     def test_celestials(self):
         self.assertEqual(len(SolarSystemSimulation.celestials), 5)
         self.assertEqual(SolarSystemSimulation.celestials["Sun"].mass, 1.989 * (10 ** 30))
+
+    def test_normalize_position(self):
+        self.assertEqual([10, 5], self.test_simulation.normalize_position([100, 50], 100, 1000))
 
 
 if __name__ == "__main__":

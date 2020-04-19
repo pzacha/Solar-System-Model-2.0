@@ -7,6 +7,9 @@
 ## Technologies
 * Python 3.8.0
     * numpy
+	
+## Screenshots
+![calendar](/img/simulation.gif)
 
 ## Modules
 * models.py - contains classes.

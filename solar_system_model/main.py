@@ -1,7 +1,6 @@
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.animation import FuncAnimation
+from models import SpaceObject, Spacecraft
+from simulation import SolarSystemSimulation
 
-from models import SpaceObject, Spacecraft, SolarSystemSimulation
+sim = SolarSystemSimulation(3600)
 
-sim = SolarSystemSimulation()
+sim.animation()

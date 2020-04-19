@@ -74,7 +74,8 @@ class SolarSystemSimulation:
 
         fig = plt.figure()
         ax = plt.axes(xlim=(-100, 100), ylim=(-100, 100))
-        (line,) = ax.plot([0], [0], "go")
+        (line,) = ax.plot([0], [0], "bo")
+        (line2,) = ax.plot([0], [0], "yo")
 
         def animate(i):
             SolarSystemSimulation.celestials["Earth"].update_attributes(
@@ -84,12 +85,10 @@ class SolarSystemSimulation:
                 SolarSystemSimulation.celestials["Earth"].position, old_range=2 * 10 ** 11
             )
             line.set_data(x_cor, y_cor)
-            return (line,)
+            line2.set_data([0], [0])
+            return (line, line2)
 
-        anim = FuncAnimation(fig, animate, interval=1, blit=True)
+        anim = FuncAnimation(fig, animate, frames=182, interval=1, blit=True, repeat=False)
+        # Save animation as a gif.
+        # anim.save("simulation2.gif", writer="imagemagick")
         plt.show()
-
-
-sim = SolarSystemSimulation(2 * 3600)
-
-sim.animation()

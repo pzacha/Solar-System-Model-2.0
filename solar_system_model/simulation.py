@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-from .models import SpaceObject, Spacecraft
+from models import SpaceObject, Spacecraft
 
 
 class SolarSystemSimulation:
@@ -26,7 +26,7 @@ class SolarSystemSimulation:
         sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
         # mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[57.9 * (10 ** 9), 0], velocity=[47400, 0])
         # venus = SpaceObject(mass=4.87 * (10 ** 24), position=[108.2 * (10 ** 9), 0], velocity=[35000, 0])
-        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[149.6 * (10 ** 9), 0], velocity=[29800, 0])
+        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[149.6 * (10 ** 9), 0], velocity=[0, 29800])
         # mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[24100, 0])
 
         # Insert celestial objects into dictionary
@@ -73,20 +73,23 @@ class SolarSystemSimulation:
         y_cor = [0]
 
         fig = plt.figure()
-        ax = plt.axes(xlim=(0, 1000), ylim=(0, 100))
-        line = None
+        ax = plt.axes(xlim=(-100, 100), ylim=(-100, 100))
         (line,) = ax.plot([0], [0], "go")
 
         def animate(i):
-            x_cor[0] = 2 * i
-            y_cor[0] = i
+            SolarSystemSimulation.celestials["Earth"].update_attributes(
+                SolarSystemSimulation.celestials, self.timestamp
+            )
+            x_cor[0], y_cor[0] = self.normalize_position(
+                SolarSystemSimulation.celestials["Earth"].position, old_range=2 * 10 ** 11
+            )
             line.set_data(x_cor, y_cor)
             return (line,)
 
-        anim = FuncAnimation(fig, animate, frames=100, interval=50, blit=True)
+        anim = FuncAnimation(fig, animate, interval=1, blit=True)
         plt.show()
 
 
-# sim = SolarSystemSimulation()
+sim = SolarSystemSimulation(2 * 3600)
 
-# sim.animation()
+sim.animation()

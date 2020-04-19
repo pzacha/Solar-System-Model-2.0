@@ -24,28 +24,28 @@ class SolarSystemSimulation:
 
         # Initialize celestial objects
         sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
-        # mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[57.9 * (10 ** 9), 0], velocity=[47400, 0])
-        # venus = SpaceObject(mass=4.87 * (10 ** 24), position=[108.2 * (10 ** 9), 0], velocity=[35000, 0])
-        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[149.6 * (10 ** 9), 0], velocity=[0, 29800])
-        # mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[24100, 0])
+        mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[-57.9 * (10 ** 9), 0], velocity=[0, -47400])
+        venus = SpaceObject(mass=4.87 * (10 ** 24), position=[0, 108.2 * (10 ** 9)], velocity=[-35000, 0])
+        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[0, -149.6 * (10 ** 9)], velocity=[29800, 0])
+        mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[0, 24100])
 
         # Insert celestial objects into dictionary
         SolarSystemSimulation.celestials = {
             "Sun": sun,
-            # "Mercury": mercury,
-            # "Venus": venus,
+            "Mercury": mercury,
+            "Venus": venus,
             "Earth": earth,
-            # "Mars": mars,
+            "Mars": mars,
         }
 
     def simulate_step(self):
         """Iterate through celestials and update their attributes.
         """
 
-        for celestial in celestials.items():
-            celestial[1].update_attributes(celestials, self.timestamp)
+        for celestial in SolarSystemSimulation.celestials.items():
+            celestial[1].update_attributes(SolarSystemSimulation.celestials, self.timestamp)
 
-    def normalize_position(self, position, new_range=100, old_range=2 * 10 ** 12):
+    def normalize_position(self, position, new_range=100, old_range=2.5 * 10 ** 11):
         """Normalizes position values for proper display.
 
         Parameters
@@ -68,27 +68,44 @@ class SolarSystemSimulation:
         normalized_position[1] = round(position[1] * new_range / old_range, 1)
         return normalized_position
 
+    def update_animation_data(self, x_coords, y_coords, sun_x, sun_y):
+        """Updates coordinates for animation
+
+        Parameters
+        ----------
+        x_coords, y_coords : list[int]
+            Lists that store coordinates of planets.
+        sun_x, sun_y : list[int]
+            Coordinates that stores x and y coordinates of Sun.
+        """
+
+        iter = 0
+        for celestial in SolarSystemSimulation.celestials.items():
+            if celestial[0] != "Sun":
+                x_coords[iter], y_coords[iter] = self.normalize_position(celestial[1].position)
+                iter += 1
+            else:
+                sun_x[0], sun_y[0] = self.normalize_position(celestial[1].position)
+
     def animation(self):
-        x_cor = [0]
-        y_cor = [0]
+        x_coord = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
+        y_coord = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
+        sun_x = [0]
+        sun_y = [0]
 
         fig = plt.figure()
         ax = plt.axes(xlim=(-100, 100), ylim=(-100, 100))
-        (line,) = ax.plot([0], [0], "bo")
-        (line2,) = ax.plot([0], [0], "yo")
+        (planets,) = ax.plot([0], [0], "bo")
+        (sun,) = ax.plot([0], [0], "yo")
 
         def animate(i):
-            SolarSystemSimulation.celestials["Earth"].update_attributes(
-                SolarSystemSimulation.celestials, self.timestamp
-            )
-            x_cor[0], y_cor[0] = self.normalize_position(
-                SolarSystemSimulation.celestials["Earth"].position, old_range=2 * 10 ** 11
-            )
-            line.set_data(x_cor, y_cor)
-            line2.set_data([0], [0])
-            return (line, line2)
+            self.simulate_step()
+            self.update_animation_data(x_coord, y_coord, sun_x, sun_y)
+            planets.set_data(x_coord, y_coord)
+            sun.set_data(sun_x, sun_y)
+            return (planets, sun)
 
-        anim = FuncAnimation(fig, animate, frames=182, interval=1, blit=True, repeat=False)
+        anim = FuncAnimation(fig, animate, interval=1, blit=True, repeat=False)
         # Save animation as a gif.
         # anim.save("simulation2.gif", writer="imagemagick")
         plt.show()

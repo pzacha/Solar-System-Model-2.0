@@ -13,11 +13,14 @@ class SolarSystemSimulation:
     ----------
     celestials : dict
         Class attribute. Dictionary containing celestial objects.
+    timestamp : int
+        Class attribute. Gravitational constant.
     """
 
     celestials = {}
 
-    def __init__(self):
+    def __init__(self, timestamp=100):
+        self.timestamp = timestamp
 
         # Initialize celestial objects
         sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
@@ -35,10 +38,12 @@ class SolarSystemSimulation:
             # "Mars": mars,
         }
 
-    # def simulate(self):
+    def simulate_step(self):
+        """Iterate through celestials and update their attributes.
+        """
 
-    #     for celestial in celestials.items():
-    #         celestial[1].update_attributes(celestials, 100)
+        for celestial in celestials.items():
+            celestial[1].update_attributes(celestials, self.timestamp)
 
     def normalize_position(self, position, new_range=100, old_range=2 * 10 ** 12):
         """Normalizes position values for proper display.

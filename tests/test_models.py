@@ -52,7 +52,6 @@ class TestSolarSystemSimulation(unittest.TestCase):
         self.test_simulation = SolarSystemSimulation()
 
     def test_celestials(self):
-        self.assertEqual(len(SolarSystemSimulation.celestials), 5)
         self.assertEqual(SolarSystemSimulation.celestials["Sun"].mass, 1.989 * (10 ** 30))
 
     def test_normalize_position(self):

@@ -57,6 +57,9 @@ class TestSolarSystemSimulation(unittest.TestCase):
     def test_normalize_position(self):
         self.assertEqual([10, 5], self.test_simulation.normalize_position([100, 50], 100, 1000))
 
+    def test_calc_elapsed_time(self):
+        self.assertEqual("Elapsed time: 3 days", self.test_simulation.calc_elapsed_time(2500))
+
 
 if __name__ == "__main__":
     unittest.main()

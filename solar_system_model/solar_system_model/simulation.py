@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-from models import SpaceObject, Spacecraft
+from solar_system_model.models import SpaceObject, Spacecraft
 
 
 class SolarSystemSimulation:
@@ -136,7 +136,7 @@ class SolarSystemSimulation:
 
             return (planets, sun, time_text)
 
-        anim = FuncAnimation(fig, animate, frames=182, interval=1, blit=True, repeat=False)
+        anim = FuncAnimation(fig, animate, interval=1, blit=True, repeat=False)
         # Save animation as a gif.
-        anim.save("simulation2.gif", writer="imagemagick")
+        # anim.save("simulation.gif", writer="imagemagick")
         plt.show()

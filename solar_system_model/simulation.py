@@ -88,8 +88,11 @@ class SolarSystemSimulation:
                 sun_x[0], sun_y[0] = self.normalize_position(celestial[1].position)
 
     def animation(self):
-        x_coord = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
-        y_coord = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
+        """Starts and animates the simulation. It uses matplotlib FuncAnimation class.
+        """
+
+        planets_x = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
+        planets_y = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
         sun_x = [0]
         sun_y = [0]
 
@@ -100,8 +103,8 @@ class SolarSystemSimulation:
 
         def animate(i):
             self.simulate_step()
-            self.update_animation_data(x_coord, y_coord, sun_x, sun_y)
-            planets.set_data(x_coord, y_coord)
+            self.update_animation_data(planets_x, planets_y, sun_x, sun_y)
+            planets.set_data(planets_x, planets_y)
             sun.set_data(sun_x, sun_y)
             return (planets, sun)
 

@@ -14,7 +14,7 @@ class SolarSystemSimulation:
     celestials : dict
         Class attribute. Dictionary containing celestial objects.
     timestamp : int
-        Class attribute. Gravitational constant.
+        Simulation timestamp value in seconds.
     """
 
     celestials = {}
@@ -87,28 +87,56 @@ class SolarSystemSimulation:
             else:
                 sun_x[0], sun_y[0] = self.normalize_position(celestial[1].position)
 
-    def animation(self):
-        """Starts and animates the simulation. It uses matplotlib FuncAnimation class.
+    def calc_elapsed_time(self, frame):
+        """Calculates elapsed time based on frame number and timestamp value.
+
+        Parameters
+        ----------
+        frame : int
+            Frame number.
+
+        Returns
+        -------
+        elapsed_time : str
+            Elapsed time in days.
         """
 
+        time = frame * self.timestamp / 86400
+        elapsed_time = "Elapsed time: " + str(round(time)) + " days"
+        return elapsed_time
+
+    def animation(self):
+        """Starts and animates the simulation.
+        """
+
+        # Create lists for planets and sun coordinates
         planets_x = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
         planets_y = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
         sun_x = [0]
         sun_y = [0]
 
-        fig = plt.figure()
+        # Initialize matplotlib Figure.
+        fig = plt.figure(figsize=(6.4, 6.4))
         ax = plt.axes(xlim=(-100, 100), ylim=(-100, 100))
         (planets,) = ax.plot([0], [0], "bo")
         (sun,) = ax.plot([0], [0], "yo")
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False)
 
+        # Defines text that displays elapsed time in days
+        time_text = ax.text(0.65, 0.97, "", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes)
+
+        # Function that defines animation used in FuncAnimation class.
         def animate(i):
             self.simulate_step()
             self.update_animation_data(planets_x, planets_y, sun_x, sun_y)
             planets.set_data(planets_x, planets_y)
             sun.set_data(sun_x, sun_y)
-            return (planets, sun)
+            time_text.set_text(self.calc_elapsed_time(i))
 
-        anim = FuncAnimation(fig, animate, interval=1, blit=True, repeat=False)
+            return (planets, sun, time_text)
+
+        anim = FuncAnimation(fig, animate, frames=182, interval=1, blit=True, repeat=False)
         # Save animation as a gif.
-        # anim.save("simulation2.gif", writer="imagemagick")
+        anim.save("simulation2.gif", writer="imagemagick")
         plt.show()

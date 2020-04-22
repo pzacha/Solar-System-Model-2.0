@@ -19,41 +19,47 @@ class SolarSystemSimulation:
         Farthest displayed position.
     ax_lim : int
         Axes limit. It corresponds to max_dist on the plot.
+    screen_ratio : int
+        Animation screen ratio.
     """
 
     celestials = {}
 
     def __init__(self, timestamp=100):
         self.timestamp = timestamp
-        self.max_dist = 3 * 10 ** 12
+        self.max_dist = 3 * 10 ** 11
         self.ax_lim = 10 ** 6
+        self.screen_ratio = 4 / 3
 
         # Initialize celestial objects
-        sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
+        self.sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
 
         # Inner planets
-        mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[-57.9 * (10 ** 9), 0], velocity=[0, -47400])
-        venus = SpaceObject(mass=4.87 * (10 ** 24), position=[0, 108.2 * (10 ** 9)], velocity=[-35000, 0])
-        earth = SpaceObject(mass=5.972 * (10 ** 24), position=[0, -149.6 * (10 ** 9)], velocity=[29800, 0])
-        mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[0, 24100])
+        self.mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[-57.9 * (10 ** 9), 0], velocity=[0, -47400])
+        self.venus = SpaceObject(mass=4.87 * (10 ** 24), position=[0, 108.2 * (10 ** 9)], velocity=[-35000, 0])
+        self.earth = SpaceObject(mass=5.972 * (10 ** 24), position=[0, -149.6 * (10 ** 9)], velocity=[29800, 0])
+        self.mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[0, 24100])
 
         # Outer planets
-        jupiter = SpaceObject(mass=1898 * (10 ** 24), position=[778.6 * (10 ** 9), 0], velocity=[0, 13100])
-        saturn = SpaceObject(mass=568 * (10 ** 24), position=[1433.5 * (10 ** 9), 0], velocity=[0, 9700])
-        uranus = SpaceObject(mass=86.8 * (10 ** 24), position=[2872.5 * (10 ** 9), 0], velocity=[0, 6800])
-        neptune = SpaceObject(mass=102 * (10 ** 24), position=[4495.1 * (10 ** 9), 0], velocity=[0, 5400])
+        self.jupiter = SpaceObject(mass=1898 * (10 ** 24), position=[-778.6 * (10 ** 9), 0], velocity=[0, -13100])
+        self.saturn = SpaceObject(mass=568 * (10 ** 24), position=[0, 1433.5 * (10 ** 9)], velocity=[-9700, 0])
+        self.uranus = SpaceObject(mass=86.8 * (10 ** 24), position=[0, -2872.5 * (10 ** 9)], velocity=[6800, 0])
+        self.neptune = SpaceObject(mass=102 * (10 ** 24), position=[4495.1 * (10 ** 9), 0], velocity=[0, 5400])
 
+        self.insert_celestials()
+
+    def insert_celestials(self):
         # Insert celestial objects into dictionary
         SolarSystemSimulation.celestials = {
-            "Sun": sun,
-            "Mercury": mercury,
-            "Venus": venus,
-            "Earth": earth,
-            "Mars": mars,
-            "Jupiter": jupiter,
-            "Saturn": saturn,
-            "Uranus": uranus,
-            "Neptune": neptune,
+            "Sun": self.sun,
+            "Mercury": self.mercury,
+            "Venus": self.venus,
+            "Earth": self.earth,
+            "Mars": self.mars,
+            "Jupiter": self.jupiter,
+            "Saturn": self.saturn,
+            "Uranus": self.uranus,
+            "Neptune": self.neptune,
         }
 
     def simulate_step(self):
@@ -79,7 +85,7 @@ class SolarSystemSimulation:
 
         normalized_position = [0, 0]
         normalized_position[0] = round(position[0] * self.ax_lim / self.max_dist, 1)
-        normalized_position[1] = round(position[1] * self.ax_lim / self.max_dist, 1)
+        normalized_position[1] = round(position[1] * self.ax_lim / self.max_dist * self.screen_ratio, 1)
         return normalized_position
 
     def update_animation_data(self, x_coords, y_coords, sun_x, sun_y):
@@ -130,7 +136,7 @@ class SolarSystemSimulation:
         sun_y = [0]
 
         # Initialize matplotlib Figure.
-        fig = plt.figure(figsize=(6.4, 6.4))
+        fig = plt.figure(figsize=(10, 7.5))
         ax = plt.axes(xlim=(-self.ax_lim, self.ax_lim), ylim=(-self.ax_lim, self.ax_lim))
         (planets,) = ax.plot([0], [0], "bo")
         (sun,) = ax.plot([0], [0], "yo")

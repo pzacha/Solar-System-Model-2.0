@@ -15,12 +15,18 @@ class SolarSystemSimulation:
         Class attribute. Dictionary containing celestial objects.
     timestamp : int
         Simulation timestamp value in seconds.
+    max_dist : int
+        Farthest displayed position.
+    ax_lim : int
+        Axes limit. It corresponds to max_dist on the plot.
     """
 
     celestials = {}
 
     def __init__(self, timestamp=100):
         self.timestamp = timestamp
+        self.max_dist = 2.5 * 10 ** 11
+        self.ax_lim = 10 ** 4
 
         # Initialize celestial objects
         sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
@@ -45,17 +51,13 @@ class SolarSystemSimulation:
         for celestial in SolarSystemSimulation.celestials.items():
             celestial[1].update_attributes(SolarSystemSimulation.celestials, self.timestamp)
 
-    def normalize_position(self, position, new_range=100, old_range=2.5 * 10 ** 11):
+    def normalize_position(self, position):
         """Normalizes position values for proper display.
 
         Parameters
         ----------
         position : list[int]
             List that stores position of object.
-        new_range : int
-            New max range.
-        old_range : int
-            Old max range - farthest possible position for object.
 
         Returns
         -------
@@ -64,8 +66,8 @@ class SolarSystemSimulation:
         """
 
         normalized_position = [0, 0]
-        normalized_position[0] = round(position[0] * new_range / old_range, 1)
-        normalized_position[1] = round(position[1] * new_range / old_range, 1)
+        normalized_position[0] = round(position[0] * self.ax_lim / self.max_dist, 1)
+        normalized_position[1] = round(position[1] * self.ax_lim / self.max_dist, 1)
         return normalized_position
 
     def update_animation_data(self, x_coords, y_coords, sun_x, sun_y):
@@ -117,7 +119,7 @@ class SolarSystemSimulation:
 
         # Initialize matplotlib Figure.
         fig = plt.figure(figsize=(6.4, 6.4))
-        ax = plt.axes(xlim=(-100, 100), ylim=(-100, 100))
+        ax = plt.axes(xlim=(-self.ax_lim, self.ax_lim), ylim=(-self.ax_lim, self.ax_lim))
         (planets,) = ax.plot([0], [0], "bo")
         (sun,) = ax.plot([0], [0], "yo")
         ax.axes.xaxis.set_visible(False)

@@ -1,8 +1,8 @@
-# Project Name
-> Solar System model.
+# Solar system model
+> 2D Solar System model.
 
 ## General info
-2D Solar system model. It uses Euler method to estimate position and velocity of objects.
+Gravitational model of the Solar System. It uses Euler method to estimate position and velocity of objects.
 GUI created using Tkinter and animation created using Matplotlib.
 
 ## Technologies
@@ -10,15 +10,26 @@ GUI created using Tkinter and animation created using Matplotlib.
     * NumPy
 	* Matplotlib
     * Tkinter
+
+## How to install
+1. Download the .zip or clone the repository. 
+2. Run pip install -r requirements.txt.
+3. Run main.py.
 	
 ## Screenshots
-![calendar](/img/simulation.gif)
+![Menu](./img/menu1.png)
+
+![calendar](/img/simulation1.gif)
+
+![Menu](./img/menu2.png)
+
+![calendar](/img/simulation2.gif)
 
 ## Modules
 * models.py - contains SpaceObject class and its childs.
 * simulation.py - contains SolarSystemSimulation class.
 * tests - module that contains all tests.
-* gui.py - module that stores GUI.
+* gui.py - module that contains GUI.
 
 ## Status
 Project is: _in progress_

@@ -28,7 +28,7 @@ class SolarSystemSimulation:
     def __init__(self, timestamp=100):
         self.timestamp = timestamp
         self.max_dist = 1 * 10 ** 11
-        self.ax_lim = 10 ** 6
+        self.ax_lim = 10 ** 9
         self.screen_ratio = 4 / 3
 
         # Initialize celestial objects

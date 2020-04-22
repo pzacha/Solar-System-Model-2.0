@@ -17,11 +17,11 @@ GUI created using Tkinter and animation created using Matplotlib.
 3. Run main.py.
 	
 ## Screenshots
-![Menu](./img/menu1.png)
+![Menu](./img/menu1.PNG)
 
 ![calendar](/img/simulation1.gif)
 
-![Menu](./img/menu2.png)
+![Menu](./img/menu2.PNG)
 
 ![calendar](/img/simulation2.gif)
 

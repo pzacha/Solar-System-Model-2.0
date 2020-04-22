@@ -46,21 +46,34 @@ class SolarSystemSimulation:
         self.uranus = SpaceObject(mass=86.8 * (10 ** 24), position=[0, -2872.5 * (10 ** 9)], velocity=[6800, 0])
         self.neptune = SpaceObject(mass=102 * (10 ** 24), position=[4495.1 * (10 ** 9), 0], velocity=[0, 5400])
 
-        self.insert_celestials()
+    def insert_celestials(self, planets):
+        """Insert celestial objects into dictionary.
 
-    def insert_celestials(self):
-        # Insert celestial objects into dictionary
+        Parameters
+        ----------
+        planets : list[int]
+            List with planets that will be used in simulation.
+        """
+
         SolarSystemSimulation.celestials = {
             "Sun": self.sun,
-            "Mercury": self.mercury,
-            "Venus": self.venus,
-            "Earth": self.earth,
-            "Mars": self.mars,
-            "Jupiter": self.jupiter,
-            "Saturn": self.saturn,
-            "Uranus": self.uranus,
-            "Neptune": self.neptune,
         }
+        if planets["Mercury"] == True:
+            SolarSystemSimulation.celestials["Mercury"] = self.mercury
+        if planets["Venus"] == True:
+            SolarSystemSimulation.celestials["Venus"] = self.venus
+        if planets["Earth"] == True:
+            SolarSystemSimulation.celestials["Earth"] = self.earth
+        if planets["Mars"] == True:
+            SolarSystemSimulation.celestials["Mars"] = self.mars
+        if planets["Jupiter"] == True:
+            SolarSystemSimulation.celestials["Jupiter"] = self.jupiter
+        if planets["Saturn"] == True:
+            SolarSystemSimulation.celestials["Saturn"] = self.saturn
+        if planets["Uranus"] == True:
+            SolarSystemSimulation.celestials["Uranus"] = self.uranus
+        if planets["Neptune"] == True:
+            SolarSystemSimulation.celestials["Neptune"] = self.neptune
 
     def simulate_step(self):
         """Iterate through celestials and update their attributes.

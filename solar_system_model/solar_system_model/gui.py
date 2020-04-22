@@ -28,7 +28,7 @@ class UserInterface:
 
         # Define checkbuttons
         self.check_planets = tk.Label(self.window, text="Choose planets for simulation.")
-        self.check_planets.grid(column=1, row=0)
+        self.check_planets.grid(row=1, column=0)
         self.mercury_state = tk.BooleanVar(value=True)
         self.mercury_btn = tk.Checkbutton(self.window, text="Mercury", variable=self.mercury_state, width=8)
         self.mercury_btn.grid(row=2, column=0)
@@ -64,7 +64,7 @@ class UserInterface:
             int(s)
         except:
             self.timestep.delete(0, "end")
-            self.timestep.insert(0, 3600)
+            self.timestep.insert(0, 7200)
 
     def get_checkbuttons_values(self):
         """Gets checkbuttons values and prepares dictionary with planets chosen for simulation.

@@ -25,15 +25,23 @@ class SolarSystemSimulation:
 
     def __init__(self, timestamp=100):
         self.timestamp = timestamp
-        self.max_dist = 2.5 * 10 ** 11
-        self.ax_lim = 10 ** 4
+        self.max_dist = 3 * 10 ** 12
+        self.ax_lim = 10 ** 6
 
         # Initialize celestial objects
         sun = SpaceObject(mass=1.989 * (10 ** 30), position=[0, 0], velocity=[0, 0])
+
+        # Inner planets
         mercury = SpaceObject(mass=0.33 * (10 ** 24), position=[-57.9 * (10 ** 9), 0], velocity=[0, -47400])
         venus = SpaceObject(mass=4.87 * (10 ** 24), position=[0, 108.2 * (10 ** 9)], velocity=[-35000, 0])
         earth = SpaceObject(mass=5.972 * (10 ** 24), position=[0, -149.6 * (10 ** 9)], velocity=[29800, 0])
         mars = SpaceObject(mass=0.642 * (10 ** 24), position=[227.9 * (10 ** 9), 0], velocity=[0, 24100])
+
+        # Outer planets
+        jupiter = SpaceObject(mass=1898 * (10 ** 24), position=[778.6 * (10 ** 9), 0], velocity=[0, 13100])
+        saturn = SpaceObject(mass=568 * (10 ** 24), position=[1433.5 * (10 ** 9), 0], velocity=[0, 9700])
+        uranus = SpaceObject(mass=86.8 * (10 ** 24), position=[2872.5 * (10 ** 9), 0], velocity=[0, 6800])
+        neptune = SpaceObject(mass=102 * (10 ** 24), position=[4495.1 * (10 ** 9), 0], velocity=[0, 5400])
 
         # Insert celestial objects into dictionary
         SolarSystemSimulation.celestials = {
@@ -42,6 +50,10 @@ class SolarSystemSimulation:
             "Venus": venus,
             "Earth": earth,
             "Mars": mars,
+            "Jupiter": jupiter,
+            "Saturn": saturn,
+            "Uranus": uranus,
+            "Neptune": neptune,
         }
 
     def simulate_step(self):

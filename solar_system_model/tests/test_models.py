@@ -50,12 +50,22 @@ class TestSpacecraft(unittest.TestCase):
 class TestSolarSystemSimulation(unittest.TestCase):
     def setUp(self):
         self.test_simulation = SolarSystemSimulation()
+        planets = {}
+        planets["Mercury"] = True
+        planets["Venus"] = True
+        planets["Earth"] = True
+        planets["Mars"] = True
+        planets["Jupiter"] = True
+        planets["Saturn"] = True
+        planets["Uranus"] = True
+        planets["Neptune"] = True
+        self.test_simulation.insert_celestials(planets)
 
     def test_celestials(self):
         self.assertEqual(SolarSystemSimulation.celestials["Sun"].mass, 1.989 * (10 ** 30))
 
     def test_normalize_position(self):
-        self.assertEqual([10, 5], self.test_simulation.normalize_position([100, 50], 100, 1000))
+        self.assertEqual([153846.2, 10256410.3], self.test_simulation.normalize_position([10 ** 9, 5 * 10 ** 10]))
 
     def test_calc_elapsed_time(self):
         self.assertEqual("Elapsed time: 3 days", self.test_simulation.calc_elapsed_time(2500))

@@ -151,8 +151,8 @@ class SolarSystemSimulation:
         """
 
         # Create lists for planets and sun coordinates
-        planets_x = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
-        planets_y = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=int)
+        planets_x = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=float)
+        planets_y = np.zeros(len(SolarSystemSimulation.celestials) - 1, dtype=float)
         sun_x = [0]
         sun_y = [0]
 

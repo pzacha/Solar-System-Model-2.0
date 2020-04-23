@@ -21,8 +21,8 @@ class SpaceObject:
 
     def __init__(self, mass: int, position: list, velocity: list):
         self.mass = mass
-        self.position = position
-        self.velocity = velocity
+        self.position = [float(i) for i in position]
+        self.velocity = [float(i) for i in velocity]
 
     def get_coordinates(self):
         """Returns x and y coordinates of an object.
@@ -119,12 +119,12 @@ class SpaceObject:
         acceleration = self.calc_acceleration(celestials)
 
         # Calculating x and y components of velocity
-        self.velocity[0] = self.velocity[0] + acceleration[0] * timestamp
-        self.velocity[1] = self.velocity[1] + acceleration[1] * timestamp
+        self.velocity[0] = float(self.velocity[0] + acceleration[0] * timestamp)
+        self.velocity[1] = float(self.velocity[1] + acceleration[1] * timestamp)
 
         # Calculating new x and y coordinates
-        self.position[0] = self.position[0] + self.velocity[0] * timestamp
-        self.position[1] = self.position[1] + self.velocity[1] * timestamp
+        self.position[0] = float(self.position[0] + self.velocity[0] * timestamp)
+        self.position[1] = float(self.position[1] + self.velocity[1] * timestamp)
 
 
 class Spacecraft(SpaceObject):

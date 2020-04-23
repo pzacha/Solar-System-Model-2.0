@@ -47,6 +47,11 @@ class SolarSystemSimulation:
         self.uranus = SpaceObject(mass=86.8 * (10 ** 24), position=[0, -2872.5 * (10 ** 9)], velocity=[6800, 0])
         self.neptune = SpaceObject(mass=102 * (10 ** 24), position=[4495.1 * (10 ** 9), 0], velocity=[0, 5400])
 
+        # Extrasolar
+        # self.extrasolar = SpaceObject(
+        #     mass=0.8 * (10 ** 29), position=[400 * (10 ** 9), -400 * (10 ** 9)], velocity=[-24000, 36000]
+        # )
+
     def insert_celestials(self, planets):
         """Insert celestial objects into dictionary. Sets max_dist attribute.
 
@@ -123,11 +128,11 @@ class SolarSystemSimulation:
 
         iter = 0
         for celestial in SolarSystemSimulation.celestials.items():
-            if celestial[0] != "Sun":
+            if celestial[0] == "Sun":
+                sun_x[0], sun_y[0] = self.normalize_position(celestial[1].position)
+            else:
                 x_coords[iter], y_coords[iter] = self.normalize_position(celestial[1].position)
                 iter += 1
-            else:
-                sun_x[0], sun_y[0] = self.normalize_position(celestial[1].position)
 
     def calc_elapsed_time(self, frame):
         """Calculates elapsed time based on frame number and timestamp value.

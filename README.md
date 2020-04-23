@@ -18,10 +18,12 @@ User can add additional objects. GUI created using Tkinter and animation created
 	
 ## Screenshots
 ![Menu](./img/menu1.PNG)
+
 Inner planets simulation with additional extraterrestial object.
 ![calendar](/img/simulation1.gif)
 
 ![Menu](./img/menu2.PNG)
+
 Solar System simulation - Mercury and Venus excluded. 
 ![calendar](/img/simulation2.gif)
 

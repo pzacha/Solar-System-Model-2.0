@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
+from matplotlib.lines import Line2D
 
 from solar_system_model.models import SpaceObject, Spacecraft
 
@@ -159,13 +160,37 @@ class SolarSystemSimulation:
         # Initialize matplotlib Figure.
         fig = plt.figure(figsize=(10, 7.5))
         ax = plt.axes(xlim=(-self.ax_lim, self.ax_lim), ylim=(-self.ax_lim, self.ax_lim))
-        (planets,) = ax.plot([0], [0], "bo")
+        (planets,) = ax.plot([0], [0], "go")
         (sun,) = ax.plot([0], [0], "yo")
+
+        # Customize figure
         ax.axes.xaxis.set_visible(False)
         ax.axes.yaxis.set_visible(False)
+        ax.set_facecolor("black")
+
+        # Legend
+        legend_elements = [
+            Line2D([0], [0], marker="o", color="white", label="Sun", markerfacecolor="y", markersize=8),
+            Line2D([0], [0], marker="o", color="white", label="Planet", markerfacecolor="g", markersize=8),
+            Line2D([0], [0], marker="o", color="white", label="Extrasolar", markerfacecolor="r", markersize=8),
+        ]
+        ax.legend(handles=legend_elements, loc="upper left", framealpha=1, fontsize="small")
+
+        # planets = mpatches.Patch(color='red', label='The red data')
+        # extraterrestial = mpatches.Patch(color='red', label='The red data')
 
         # Defines text that displays elapsed time in days
-        time_text = ax.text(0.65, 0.97, "", horizontalalignment="left", verticalalignment="top", transform=ax.transAxes)
+        time_text = ax.text(
+            0.65,
+            0.97,
+            "",
+            horizontalalignment="left",
+            verticalalignment="top",
+            transform=ax.transAxes,
+            color="white",
+            fontsize=12,
+            fontweight="semibold",
+        )
 
         # Function that defines animation used in FuncAnimation class.
         def animate(i):

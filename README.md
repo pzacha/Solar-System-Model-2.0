@@ -19,7 +19,7 @@ User can add additional objects. GUI created using Tkinter and animation created
 ## Screenshots
 ![Menu](./img/menu1.PNG)
 
-Inner planets simulation with additional extraterrestial object.
+Inner planets simulation with additional extrasolar object.
 ![calendar](/img/simulation1.gif)
 
 ![Menu](./img/menu2.PNG)

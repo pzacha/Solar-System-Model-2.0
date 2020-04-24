@@ -17,14 +17,14 @@ User can add additional objects. GUI created using Tkinter and animation created
 3. Run main.py.
 	
 ## Screenshots
+Inner planets simulation with additional extrasolar object.
 ![Menu](./img/menu1.PNG)
 
-Inner planets simulation with additional extrasolar object.
 ![calendar](/img/simulation1.gif)
 
+Solar System simulation - Mercury and Venus excluded. 
 ![Menu](./img/menu2.PNG)
 
-Solar System simulation - Mercury and Venus excluded. 
 ![calendar](/img/simulation2.gif)
 
 ## Modules
